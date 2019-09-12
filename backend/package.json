@@ -1,0 +1,9 @@
+{
+  "name": "upcoming-movies-express",
+  "version": "1.0.0",
+  "description": "Server Node and Express",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
