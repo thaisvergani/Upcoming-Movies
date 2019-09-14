@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import './movies.css';
 import InfiniteScroll from 'react-infinite-scroller';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import MovieDetails from './details'
+import SearchBar from './searchbar'
 
 class Movies extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -13,22 +17,17 @@ class Movies extends Component {
     };
   };
 
-  
-  loadItems(page) {
-    let url = '/api/movies';
-    
-    let options = {
-      method: 'GET',
-      mode: 'cors',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json;charset=UTF-8',
-        page: this.state.page
-      },
-      
-    };
+  Home() {
+    return (
+      <div>
+        <h2>Home</h2>
+      </div>
+    );
+  }
 
-    fetch(`/api/movies?page=${encodeURIComponent( this.state.page)}`)
+  loadItems(page) {
+
+    fetch(`/api/movies?page=${encodeURIComponent(this.state.page)}`)
       .then(res => res.json())
       .then(movies => {
         this.setState({
@@ -38,7 +37,7 @@ class Movies extends Component {
 
         });
         console.log(movies[0], this.state.page)
-      }); 
+      });
   }
 
   render() {
@@ -48,32 +47,45 @@ class Movies extends Component {
     this.state.movies.map((movie, i) => {
 
       this.state.items.push(
-        <div className="movie" key={movie.id}>
-          <img  src={movie.poster_path}/>
-          <div className="movie-title">
-           <p >{movie.title}</p>
-            </div>
-        </div>
 
+        <div className="movie" key={movie.id}>
+          <Link to={`/m/${movie.id}`}>
+
+            <img src={movie.poster_path} />
+            <div className="movie-title">
+              <p >{movie.title}</p>
+            </div>
+
+          </Link>
+        </div>
       );
 
     });
 
     return (
-      <div className="movies-wrapper">
-        <h2>Movies</h2>
-        <InfiniteScroll
-          pageStart={0}
-          loadMore={this.loadItems.bind(this)}
-          hasMore={this.state.hasMoreItems}
-          loader={loader}>
+      <Router>
 
-          <div className="tracks">
-            {this.state.items}
+        <div className="movies-wrapper">
+          <div className="header">
+          <SearchBar></SearchBar>
+          <Route path="/m/:movieId" component={MovieDetails} />
+
           </div>
-        </InfiniteScroll>
 
-      </div>
+          <InfiniteScroll
+            pageStart={0}
+            loadMore={this.loadItems.bind(this)}
+            hasMore={this.state.hasMoreItems}
+            loader={loader}>
+
+            <div className="tracks">
+              {this.state.items}
+            </div>
+          </InfiniteScroll>
+
+        </div>
+      </Router>
+
     );
   }
 }
