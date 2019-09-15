@@ -1,6 +1,11 @@
 ## Running the Express Server [Backend]
- node server.js 
+
+cd backend
+
+npm start
 
 ## Running the React Server [Frontend]
- cd client
- npm start
+
+cd frontend
+
+npm start
