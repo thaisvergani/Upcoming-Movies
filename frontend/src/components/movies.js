@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import './movies.css';
 import InfiniteScroll from 'react-infinite-scroller';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import MovieDetails from './details'
-import SearchBar from './searchbar'
+import axios from 'axios';
 
 class Movies extends Component {
 
@@ -13,63 +12,84 @@ class Movies extends Component {
       movies: [],
       hasMoreItems: true,
       page: 1,
-      items: []
+      items: [],
+      query: null
     };
-  };
 
-  Home() {
-    return (
-      <div>
-        <h2>Home</h2>
-      </div>
-    );
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.loadItems = this.loadItems.bind(this);
+  }
+
+  handleChange(event) {
+    event.preventDefault();
+    this.setState({ query: event.target.value });
+  }
+
+  handleSubmit(event) {
+    this.setState({
+      movies: [],
+      items: [],
+      hasMoreItems: true,
+      page: 1
+    })
+    event.preventDefault();
   }
 
   loadItems(page) {
+  
+    axios.get(
+      "/api/movies",
+      {
+        params: {
+          page: this.state.page,
+          q: this.state.query
+        }
+      })
+      .then(response => {
 
-    fetch(`/api/movies?page=${encodeURIComponent(this.state.page)}`)
-      .then(res => res.json())
-      .then(movies => {
         this.setState({
-          movies: movies,
+          movies: response.data,
           hasMoreItems: true,
           page: page + 1
+        })
 
-        });
-        console.log(movies[0], this.state.page)
-      });
+        this.state.movies.map((movie, i) => {
+
+          this.state.items.push(
+            <div className="movie" key={movie.id.toString()} keyprop={movie.id.toString()}>
+              <Link to={`/m/${movie.id}`}>
+                <img src={movie.poster_path} alt={movie.title} />
+                <div className="movie-title">
+                  <p >{movie.title}</p>
+                </div>
+              </Link>
+            </div>
+          )
+        }
+        )
+
+      })
   }
 
   render() {
 
-    const loader = <div className="loader">Loading ...</div>;
-
-    this.state.movies.map((movie, i) => {
-
-      this.state.items.push(
-
-        <div className="movie" key={movie.id}>
-          <Link to={`/m/${movie.id}`}>
-
-            <img src={movie.poster_path} />
-            <div className="movie-title">
-              <p >{movie.title}</p>
-            </div>
-
-          </Link>
-        </div>
-      );
-
-    });
+    const loader = <div className="loader" key={0}>Loading ...</div>;
 
     return (
       <Router>
 
         <div className="movies-wrapper">
-          <div className="header">
-          <SearchBar></SearchBar>
-          <Route path="/m/:movieId" component={MovieDetails} />
 
+          <div className="header">
+            <form onSubmit={this.handleSubmit} >
+              <input
+                onChange={this.handleChange}
+                type="text"
+                className="input"
+                placeholder="search" />
+            </form >
+            <Route path="/m/:movieId" component={MovieDetails} />
           </div>
 
           <InfiniteScroll
@@ -77,14 +97,13 @@ class Movies extends Component {
             loadMore={this.loadItems.bind(this)}
             hasMore={this.state.hasMoreItems}
             loader={loader}>
-
-            <div className="tracks">
+            <div className="movies">
               {this.state.items}
             </div>
           </InfiniteScroll>
 
         </div>
-      </Router>
+      </Router >
 
     );
   }

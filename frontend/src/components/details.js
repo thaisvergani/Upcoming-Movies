@@ -9,7 +9,7 @@ class MovieDetails extends React.Component {
             name: null,
             imageUrl: null,
             genre: null,
-            overview: 'null',
+            overview: null,
             releaseDate: null,
         };
     };
@@ -17,7 +17,7 @@ class MovieDetails extends React.Component {
     componentDidUpdate(previousProps, previousState) {
         if (this.state.movieId !== this.props.match.params.movieId) {
 
-            fetch('/api/movies/' + this.props.match.params.movieId)
+            fetch('/api/movies/details/' + this.props.match.params.movieId)
                 .then(res => res.json())
                 .then(details => {
                     this.setState({
