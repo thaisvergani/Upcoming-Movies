@@ -36,8 +36,7 @@ class Movies extends Component {
     event.preventDefault();
   }
 
-  loadItems(page) {
-  
+  loadItems() {
     axios.get(
       "/api/movies",
       {
@@ -48,10 +47,14 @@ class Movies extends Component {
       })
       .then(response => {
 
+        var hasMoreItems = true;
+        if (response.data.length == 0){
+          hasMoreItems = false
+        }
         this.setState({
           movies: response.data,
-          hasMoreItems: true,
-          page: page + 1
+          hasMoreItems: hasMoreItems,
+          page: this.state.page + 1
         })
 
         this.state.movies.map((movie, i) => {
