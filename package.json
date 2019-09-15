@@ -8,5 +8,10 @@
     "cors": "^2.8.5",
     "express": "^4.16.2",
     "nodemon": "^1.19.2"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "heroku-postbuild": "cd frontend && npm install && npm run build"
+
   }
 }
