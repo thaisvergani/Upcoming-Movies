@@ -33,7 +33,11 @@ module.exports = {
         }
 
         response.data.results.forEach((item) => {
-            item.poster_path = 'http://image.tmdb.org/t/p/w92/'.concat(item.poster_path);
+            if (item.poster_path != null){
+                item.poster_path = 'http://image.tmdb.org/t/p/w92/'.concat(item.poster_path);
+            }else{
+                item.poster_path = 'static/no-image-available-icon.jpg';
+            }
         })
         return res.json(response.data.results);
     },

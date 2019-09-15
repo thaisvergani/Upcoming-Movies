@@ -3,6 +3,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import MovieDetails from './details'
 import axios from 'axios';
+import noimage from './static/noimage.jpg';
 
 class Movies extends Component {
 
@@ -35,7 +36,10 @@ class Movies extends Component {
     })
     event.preventDefault();
   }
-
+  addDefaultSrc(ev){
+    ev.target.src = noimage
+  }
+ 
   loadItems() {
     axios.get(
       "/api/movies",
@@ -48,7 +52,7 @@ class Movies extends Component {
       .then(response => {
 
         var hasMoreItems = true;
-        if (response.data.length == 0){
+        if (response.data.length == 0) {
           hasMoreItems = false
         }
         this.setState({
@@ -62,7 +66,11 @@ class Movies extends Component {
           this.state.items.push(
             <div className="movie" key={movie.id.toString()} keyprop={movie.id.toString()}>
               <Link to={`/m/${movie.id}`}>
-                <img src={movie.poster_path} alt={movie.title} />
+                <img
+                  src={movie.poster_path}
+                  alt={movie.title}
+                  onError={this.addDefaultSrc}
+                 />
                 <div className="movie-title">
                   <p >{movie.title}</p>
                 </div>
