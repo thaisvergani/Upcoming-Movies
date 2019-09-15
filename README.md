@@ -13,3 +13,7 @@ npm start
 ## Assumptions that I have made
 
 ## List of third-party libraries used and short description of why/how they were used
+    * axios 
+    * moment
+    * react-infinite-scroller
+    * react-router-dom
