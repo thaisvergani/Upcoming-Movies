@@ -37,6 +37,7 @@ class Movies extends Component {
     event.preventDefault();
   }
   addDefaultSrc(ev){
+
     ev.target.src = noimage
   }
  
@@ -62,12 +63,16 @@ class Movies extends Component {
         })
 
         this.state.movies.map((movie, i) => {
-
+          
+          var imgsrc = movie.poster_path;
+          if (movie.poster_path == null){
+            imgsrc = noimage
+          }
           this.state.items.push(
             <div className="movie" key={movie.id.toString()} keyprop={movie.id.toString()}>
               <Link to={`/m/${movie.id}`}>
                 <img
-                  src={movie.poster_path}
+                  src={imgsrc}
                   alt={movie.title}
                   onError={this.addDefaultSrc}
                  />

@@ -48,3 +48,13 @@ li{
   top: 0; /* Position the navbar at the top of the page */
   width: 100%; /* Full width */ 
 }
+a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.6s ease;
+
+}
+a:hover {
+  
+  color: rgb(146, 146, 146);
+}

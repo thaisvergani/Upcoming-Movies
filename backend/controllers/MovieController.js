@@ -5,7 +5,7 @@ module.exports = {
 
 
     async list_movies(req, res) {
-        console.log(req.query)
+
         var response;
         if (req.query.q){
             response = await axios.get(
@@ -35,8 +35,9 @@ module.exports = {
         response.data.results.forEach((item) => {
             if (item.poster_path != null){
                 item.poster_path = 'http://image.tmdb.org/t/p/w92/'.concat(item.poster_path);
-            }else{
-                item.poster_path = 'static/no-image-available-icon.jpg';
+            }       
+            if (item.backdrop_path != null){
+                item.backdrop_path = 'http://image.tmdb.org/t/p/w780/'.concat(item.backdrop_path);
             }
         })
         return res.json(response.data.results);
