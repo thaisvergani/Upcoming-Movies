@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import MovieDetails from './details'
+import MovieDetails from './details';
 import axios from 'axios';
 import noimage from './static/noimage.jpg';
+import moment from "moment";
 
 class Movies extends Component {
 
@@ -15,6 +16,7 @@ class Movies extends Component {
       page: 1,
       items: [],
       query: null
+
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -36,11 +38,10 @@ class Movies extends Component {
     })
     event.preventDefault();
   }
-  addDefaultSrc(ev){
-
+  addDefaultSrc(ev) {
     ev.target.src = noimage
   }
- 
+
   loadItems() {
     axios.get(
       "/api/movies",
@@ -53,7 +54,7 @@ class Movies extends Component {
       .then(response => {
 
         var hasMoreItems = true;
-        if (response.data.length == 0) {
+        if (response.data.length === 0) {
           hasMoreItems = false
         }
         this.setState({
@@ -63,21 +64,32 @@ class Movies extends Component {
         })
 
         this.state.movies.map((movie, i) => {
-          
-          var imgsrc = movie.poster_path;
-          if (movie.poster_path == null){
+
+          var imgsrc = movie.backdrop_path;
+          if (movie.backdrop_path == null) {
             imgsrc = noimage
           }
           this.state.items.push(
             <div className="movie" key={movie.id.toString()} keyprop={movie.id.toString()}>
               <Link to={`/m/${movie.id}`}>
-                <img
+
+                <img className='movie-img'
                   src={imgsrc}
                   alt={movie.title}
-                  onError={this.addDefaultSrc}
-                 />
-                <div className="movie-title">
-                  <p >{movie.title}</p>
+                  onError={this.addDefaultSrc} />
+
+                <div className='movie-details-list'>
+                  <div className="movie-title">
+                    <p >{movie.title}</p>
+                  </div>
+                  <div className="genres">
+                    {movie.genres.map((genre, i) => {
+                      return <p key={movie.id + "_" + genre.id}>{genre.name}</p>
+                    })}
+                  </div>
+                  <p>
+                    {moment(movie.release_date).format("MMMM DD, YYYY")}
+                  </p>
                 </div>
               </Link>
             </div>
@@ -91,15 +103,12 @@ class Movies extends Component {
   render() {
 
     const loader = <div className="loader" key={0}>Loading ...</div>;
-
     return (
-      <Router>
-
-        <div className="movies-wrapper">
-
-          <div className="header">
-            <form onSubmit={this.handleSubmit} >
-              <input
+      <Router >
+        <div>
+          <div className="movies-header">
+            <form onSubmit={this.handleSubmit} className='searchbar' >
+              <input 
                 onChange={this.handleChange}
                 type="text"
                 className="input"
@@ -108,16 +117,19 @@ class Movies extends Component {
             <Route path="/m/:movieId" component={MovieDetails} />
           </div>
 
-          <InfiniteScroll
-            pageStart={0}
-            loadMore={this.loadItems.bind(this)}
-            hasMore={this.state.hasMoreItems}
-            loader={loader}>
-            <div className="movies">
-              {this.state.items}
-            </div>
-          </InfiniteScroll>
+          <div className="movies-wrapper">
 
+            <InfiniteScroll
+              pageStart={0}
+              loadMore={this.loadItems.bind(this)}
+              hasMore={this.state.hasMoreItems}
+              loader={loader}>
+              <div className="movies">
+                {this.state.items}
+              </div>
+            </InfiniteScroll>
+
+          </div>
         </div>
       </Router >
 

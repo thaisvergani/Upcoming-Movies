@@ -31,22 +31,11 @@ module.exports = {
                 }
             )
         }
-
-        response.data.results.forEach((item) => {
-            if (item.poster_path != null){
-                item.poster_path = 'http://image.tmdb.org/t/p/w92/'.concat(item.poster_path);
-            }       
-            if (item.backdrop_path != null){
-                item.backdrop_path = 'http://image.tmdb.org/t/p/w780/'.concat(item.backdrop_path);
-            }
-        })
-        return res.json(response.data.results);
-    },
-
-    async movie_details(req, res) {
-     
-        const response = await axios.get(
-            'https://api.themoviedb.org/3/movie/'.concat(req.params.id),
+        /**
+         * TODO: cash genres name list 
+         **/ 
+        genres_list = await axios.get(
+            'https://api.themoviedb.org/3/genre/movie/list',
             {
                 params: {
                     language: 'en-US',
@@ -54,7 +43,23 @@ module.exports = {
                 },
             }
         )
-        return res.json(response.data);
-    },
+        response.data.results.forEach((item) => {
+            if (item.poster_path != null){
+                item.poster_path = 'http://image.tmdb.org/t/p/w92/'.concat(item.poster_path);
+            }       
+            if (item.backdrop_path != null){
+                item.backdrop_path = 'http://image.tmdb.org/t/p/w780/'.concat(item.backdrop_path);
+            }
+            
+            if (item.genre_ids){
+                item.genres = genres_list.data.genres.filter((g)=>{                
+                    return item.genre_ids.includes(g.id)
+                })
+
+            }
+            
+        })
+        return res.json(response.data.results);
+    }
   
 };

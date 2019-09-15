@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link } from "react-router-dom";
+import moment from "moment";
+import noimage from './static/noimage.jpg';
 
 class MovieDetails extends React.Component {
     constructor(props) {
@@ -8,12 +10,15 @@ class MovieDetails extends React.Component {
             movieId: this.props.match.movieId,
             name: null,
             imageUrl: null,
-            genre: null,
+            genres: null,
             overview: null,
             releaseDate: null,
+            loaded: false
         };
     };
-
+    addDefaultSrc(ev) {
+        ev.target.src = noimage
+    }
     componentDidUpdate(previousProps, previousState) {
         if (this.state.movieId !== this.props.match.params.movieId) {
 
@@ -23,29 +28,52 @@ class MovieDetails extends React.Component {
                     this.setState({
                         movieId: this.props.match.params.movieId,
                         name: details.title,
-                        imageUrl: details.title,
-                        genre: details.genres,
+                        imageUrl: details.poster_path,
+                        genres: details.genres,
                         overview: details.overview,
-                        releaseDate: details.release_date
+                        releaseDate: details.release_date,
+                        loaded: true
                     });
                 });
         }
-
     }
 
     render() {
 
         const { params } = this.props.match
 
-        return <div key={params.movieId}>
-            <Link to="/">x</Link>
+        return (
+            <div key={params.movieId}>
 
-            <p>{params.movieId}</p>
-            <p>{this.state.name}</p>
-            <p>{this.state.overview}</p>
-            <p>{this.state.releaseDate}</p>
 
-        </div>
+                {this.state.loaded ?
+                    <div className='movie-details-box'>
+
+                        <img className='movie-details-img'
+                            src={this.state.imageUrl}
+                            alt={this.state.title}
+                            onError={this.addDefaultSrc} />
+                        <div className='movie-overview'>
+                            <div className='close-details'><Link to="/">x</Link></div>
+
+                            <p>{this.state.name}</p>
+                            <div className="genres">
+                                {this.state.genres.map((genre, i) => {
+                                    return <p key={"details_" + genre.id}>{genre.name}</p>
+                                })}
+                            </div>
+                            <p> {this.state.overview}</p>
+                            <p>
+                               Release date: {moment(this.state.releaseDate).format("MMMM DD, YYYY")}
+                            </p>
+                        </div>
+                    </div>
+
+                    :
+                    <div></div>
+
+                }
+            </div>)
     }
 }
 export default MovieDetails
