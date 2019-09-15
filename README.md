@@ -1,7 +1,5 @@
 ## Running the Express Server [Backend]
 
-cd backend
-
 npm start
 
 ## Running the React Server [Frontend]
@@ -9,3 +7,9 @@ npm start
 cd frontend
 
 npm start
+
+## Architecture (how did I approach the problem)
+
+## Assumptions that I have made
+
+## List of third-party libraries used and short description of why/how they were used
