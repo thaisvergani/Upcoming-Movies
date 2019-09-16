@@ -19,9 +19,11 @@ class MovieDetails extends React.Component {
         this.addDefaultSrc = this.addDefaultSrc.bind(this);
         this.getMovieDetails = this.getMovieDetails.bind(this);
     };
+
     addDefaultSrc(event) {
         event.target.src = noimage
     }
+
     getMovieDetails() {
         console.log('render');
 
@@ -39,40 +41,35 @@ class MovieDetails extends React.Component {
                 });
             });
     }
+
     componentDidMount() {
         this.getMovieDetails();
 
     }
+
     componentDidUpdate(previousProps, previousState) {
         console.log(this.state.movieId, this.props.match.params.movieId);
 
         if (this.state.movieId !== this.props.match.params.movieId) {
-
             this.getMovieDetails();
-
         }
     }
 
     render() {
 
         const { params } = this.props.match
-
         return (
-
             <div key={params.movieId}>
-
-                { (this.state.movieId == this.props.match.params.movieId) ?
+                {(this.state.movieId == this.props.match.params.movieId) ?
                     <div className='movie-details-box'>
-
-                        <div  className='movie-details-img'>
+                        <div className='movie-details-img'>
                             <img
-                            src={this.state.imageUrl}
-                            alt={this.state.title}
-                            onError={this.addDefaultSrc} />
-                            </div>
+                                src={this.state.imageUrl}
+                                alt={this.state.title}
+                                onError={this.addDefaultSrc} />
+                        </div>
                         <div className='movie-overview'>
                             <div className='close-details'><Link to="/">x</Link></div>
-
                             <p>{this.state.name}</p>
                             <div className="genres">
                                 {this.state.genres.map((genre, i) => {
@@ -87,12 +84,10 @@ class MovieDetails extends React.Component {
                     </div>
                     : (
                         <div className='movie-details-box'>
-                           <div className='loader-details'>  Loading...</div>
+                            <div className='loader-details'>  Loading...</div>
                         </div>
-
                     )
                 }
-
             </div>)
     }
 }
