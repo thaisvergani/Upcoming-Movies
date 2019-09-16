@@ -1,3 +1,17 @@
+# Upcoming Movies 📽🎞
+
+Webapp for cinephiles and movie hobbyists.
+
+## Features
+
+- See a list of upcoming movies - including the movies' name, poster or backdrop image,
+genre and release date. The list should not be limited to only the first 20 movies as
+returned by the API.
+- Select a specific movie to see its details (name, poster image, genre, overview and
+release date).
+- Search for movies by entering a partial or full movie name.
+
+
 ## Architecture
 
 The Application was built using React in the client side (frontend) and using node.js + Express framework on the backend.
