@@ -48,19 +48,22 @@ li {
 
 .movie-details-img {
     object-fit: contain;
-    height: 80%;
-    padding: 40px 10px 10px 30px;
+    height: auto;
+    width: 160px;
     object-position: top;
+    margin: auto;
 }
 
 .movie-overview {
     text-align: left;
-    width: 100%;
-    padding: 5px 50px 0px 5px;
+    position: relative;
+    width: 80%;
+
+    margin-right: 0;
 }
 
 .movies-wrapper {
-    display: flex;
+    display: block;
     flex-wrap: wrap;
     background: #131313;
     z-index: 0;
@@ -144,4 +147,17 @@ a:hover .movie-img {
     height: 290px;
     box-shadow: rgba(0, 0, 0, 0.8) 10px 10px 28px 0px;
     padding: 20px 0px;
+}
+.loader-details{
+    margin: auto;
+    color: rgba(192, 192, 192, 0.8);
+    left: 50%;
+    bottom: 10%;
+}
+.loader-list{
+    padding: 50px 0 20px 0;
+    margin: auto;
+    left: 50%;
+    color: rgba(192, 192, 192, 0.8);
+
 }

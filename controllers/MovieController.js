@@ -57,4 +57,4 @@ module.exports = {
         return res.json(response.data.results);
     }
 
-};
+}

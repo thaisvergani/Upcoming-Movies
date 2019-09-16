@@ -3,7 +3,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import MovieDetails from './details';
 import axios from 'axios';
-import noimage from './static/noimage.jpg';
+import noimage from '../static/noimage.jpg';
 import moment from "moment";
 
 class Movies extends Component {
@@ -102,7 +102,7 @@ class Movies extends Component {
 
   render() {
 
-    const loader = <div className="loader" key={0}>Loading ...</div>;
+    const loader = <div className="loader-list" key={0}>Loading ...</div>;
     return (
       <Router >
         <div>
