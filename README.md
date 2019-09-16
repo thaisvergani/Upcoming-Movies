@@ -4,13 +4,10 @@ Webapp for cinephiles and movie hobbyists.
 
 ## Features
 
-- See a list of upcoming movies - including the movies' name, poster or backdrop image,
-genre and release date. The list should not be limited to only the first 20 movies as
-returned by the API.
-- Select a specific movie to see its details (name, poster image, genre, overview and
-release date).
+- See a list of upcoming movies - including the movies' name, backdrop image, genre and release date. 
+- Infinite scroll to not limit the list.
+- Select a specific movie to see its details (name, poster image, genre, overview and release date).
 - Search for movies by entering a partial or full movie name.
-
 
 ## Architecture
 
@@ -33,9 +30,9 @@ Used to make the requisitions from the frontend (React) to the backend (express)
 ### Moment
 Used to format dates on frontend
 
-### react-infinite-scroller
+### React Infinite Scroller
 This component was used to load the movies as the list is scrolled. 
 This way, the list is not limited to the first 20 results
 
-### react-router-dom
+### React Router Dom
 Used to route the components (open details and go back to main list)
