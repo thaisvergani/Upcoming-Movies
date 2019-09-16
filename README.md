@@ -13,16 +13,17 @@ Webapp for cinephiles and movie hobbyists.
 
 The Application was built using React in the client side (frontend) and using node.js + Express framework on the backend.
 
-> #### Running the Express Server [Backend]
-> npm start
 
-> #### Running the React Server [Frontend]
-> cd frontend
-> npm start
-
+## Assumptions
 The list of movies and details is retrieved from The Movie Database API.
 No data storage strategy was used, yet, in a futute implementation, a cache system would be helpful, so the backend could get the genres and movie list from the database, instead of getting it from the The Movie Database API every time.
 
+## Running the server
+``` 
+ npm start # Running the Express Server [Backend]
+ cd frontend # entering the React Server directory [Frontend]
+ npm start # Running the React Server [Frontend]
+```
 ## Third-party libraries used
 
 ### Axios 
