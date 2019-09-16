@@ -1,14 +1,13 @@
-## Running the Express Server [Backend]
+## Architecture
 
-npm start
+The Application was built using React in the client side (frontend) and using node.js + Express framework on the backend.
 
-## Running the React Server [Frontend]
+> #### Running the Express Server [Backend]
+> npm start
 
-cd frontend
-
-npm start
-
-## Architecture (how did I approach the problem)
+> #### Running the React Server [Frontend]
+> cd frontend
+> npm start
 
 ## Assumptions that I have made
 To a future development, could be implemented some cash system to store the data as the genres list and make requisitions faster.
