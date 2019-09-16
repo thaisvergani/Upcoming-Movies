@@ -1,13 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Movies from './components/movies';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">        
-
-      </header>
+    <div className="App">           
+        <Movies />
     </div>
   );
 }
