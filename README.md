@@ -1,4 +1,4 @@
-# 🍿 Upcoming Movies 🍿
+# 🎥 Upcoming Movies 🎥
 
 Webapp for cinephiles and movie hobbyists.
 
