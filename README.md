@@ -1,8 +1,10 @@
 # Upcoming Movies 
 
 Webapp for cinephiles and movie hobbyists.
-Built using https://github.com/facebook/react and https://github.com/nodejs
-Hosted at Heroku https://upcoming-movies-thais.herokuapp.com/
+
+Built using  and [React JS](https://github.com/facebook/react) and [Node JS](https://github.com/nodejs).
+
+Hosted at [Heroku] (https://upcoming-movies-thais.herokuapp.com/)
 
 ## Features
 
